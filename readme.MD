@@ -1,17 +1,81 @@
-<h1>PHPUnit Test Repository</h1>
+# Leilão Hunter
 
-Bem-vindo ao repositório de testes de unidade utilizando PHPUnit! Este projeto visa fornecer uma estrutura sólida e exemplos práticos para facilitar a compreensão sobre implementação e execução de testes automatizados em projetos PHP.
+## Introdução
 
-<h2>O que é PHPUnit?</h2>
-PHPUnit é um framework de teste unitário para PHP que oferece uma abordagem eficiente e estruturada para verificar se o código está funcionando conforme o esperado. Ele permite criar testes para suas classes e métodos, garantindo que seu código seja robusto, confiável e fácil de manter.
+O Leilão Hunter é uma aplicação PHP destinada a realizar leilões virtuais. Ele é composto por classes que modelam elementos fundamentais de um leilão, como lances, usuários e o próprio leilão. Além disso, inclui um serviço de avaliação que determina o maior e menor lance, bem como os três maiores lances realizados. Este projeto surgiu como uma abordagem que escolhi para aprofundar meu conhecimento em testes de unidade.
 
-<h2>Como começar</h2>
-<b>Instalação:</b>
-Certifique-se de ter o PHPUnit instalado em seu ambiente de desenvolvimento. Se ainda não tiver, consulte a documentação oficial do PHPUnit para obter instruções detalhadas.
-<a href="https://phpunit.de/">PHPUnit</a>
+## Estrutura de Classes
 
-<h2>Estrutura do Projeto:</h2>
-Este repositório é estruturado para facilitar a inclusão e execução de testes. Explore os diretórios para entender como organizar seus próprios testes e código fonte.
+### Classe `Usuario`
 
-<h2>Contribuindo:</h2>
-Sinta-se à vontade para contribuir com melhorias, correções ou adição de novos testes. <b>Todas as contribuições são bem-vindas!</b>.
+A classe `Usuario` representa um participante do leilão, identificado pelo seu nome.
+
+#### Propriedades
+
+- `nome`: String que armazena o nome do usuário.
+
+#### Métodos
+
+- `__construct(string $nome)`: Construtor que recebe o nome do usuário como parâmetro.
+- `getNome(): string`: Retorna o nome do usuário.
+
+### Classe `Lance`
+
+A classe `Lance` representa um lance feito por um usuário em um leilão, contendo informações sobre o usuário que fez o lance e o valor do lance.
+
+#### Propriedades
+
+- `usuario`: Instância da classe `Usuario` representando o usuário que fez o lance.
+- `valor`: Valor do lance.
+
+#### Métodos
+
+- `__construct(Usuario $usuario, float $valor)`: Construtor que recebe uma instância de `Usuario` e o valor do lance como parâmetros.
+- `getUsuario(): Usuario`: Retorna a instância de `Usuario` associada ao lance.
+- `getValor(): float`: Retorna o valor do lance.
+
+### Classe `Leilao`
+
+A classe `Leilao` representa um leilão com uma descrição e a coleção de lances feitos pelos participantes.
+
+#### Propriedades
+
+- `descricao`: Descrição do leilão.
+- `lances`: Array contendo instâncias da classe `Lance`.
+
+#### Métodos
+
+- `__construct(string $descricao)`: Construtor que recebe a descrição do leilão como parâmetro.
+- `recebeLance(Lance $lance)`: Adiciona um lance à coleção de lances do leilão.
+- `getLances(): array`: Retorna a coleção de lances do leilão.
+
+### Classe `Avaliador`
+
+A classe `Avaliador` é responsável por avaliar um leilão, determinando o maior e o menor lance, bem como os três maiores lances.
+
+#### Propriedades
+
+- `menorValor`: Armazena o menor valor de lance.
+- `maiorValor`: Armazena o maior valor de lance.
+- `maioresLances`: Array contendo os três maiores lances.
+
+#### Métodos
+
+- `avalia(Leilao $leilao)`: Avalia o leilão, calculando o menor e o maior valor de lance, bem como os três maiores lances.
+- `getMaiorValor(): float`: Retorna o maior valor de lance.
+- `getMenorValor(): float`: Retorna o menor valor de lance.
+- `getMaioresLances(): array`: Retorna os três maiores lances.
+
+## Lógica do Código
+
+1. **Classe `Usuario`**: Representa um participante do leilão, mantendo informações sobre o nome do usuário.
+
+2. **Classe `Lance`**: Modela um lance no leilão, com informações sobre o usuário que fez o lance e o valor do lance.
+
+3. **Classe `Leilao`**: Representa um leilão com uma descrição e uma coleção de lances. Permite adicionar lances à coleção e recuperar a lista de lances.
+
+4. **Classe `Avaliador`**: Avalia um leilão, calculando o menor e o maior valor de lance, bem como os três maiores lances. Essa classe é útil para fornecer informações estatísticas sobre o leilão.
+
+A lógica do código segue um fluxo simples: os usuários fazem lances, que são adicionados ao leilão. O `Avaliador` pode então avaliar o leilão para determinar estatísticas relevantes, como o maior e menor lance, e os três maiores lances.
+
+Este projeto fornece uma estrutura básica para a realização de leilões virtuais, e sua expansão pode incluir recursos adicionais, como acompanhamento do tempo do leilão, validação de lances, entre outros.
